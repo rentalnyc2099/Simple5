@@ -1,0 +1,242 @@
+
+<table style="font-size:8pt; ">
+  <tr>
+    <td></td>
+    <td>
+      <abbr title="Federal Housing Administration - Client A"> FHA </abbr> Case
+      <abbr title="Number"> No. </abbr>
+    </td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td class="TRBL" style="vertical-align:middle; ">
+      <dt_if cond="dt_FHASuffix/@v .ne. NIL">
+        <span style="font-family:Courier; font-weight:bold; ">
+        <span class="field" id="dt_VA_FHA_Case_Num/@v" dt_req="r" />-<span class="field" id="dt_FHASuffix/@v" dt_req="r" /></span>
+      <dt_else />
+        <span class="field" id="dt_VA_FHA_Case_Num/@v" dt_req="r" />
+      </dt_if>
+    </td>
+  </tr>
+
+  <tr style="padding-bottom:8pt; ">
+    <td width="70%"></td>
+    <td width="30%" style="font-size:8pt; text-align:left; ">
+      <dt_if cond="dt_UseNewHeaders/@v .ne. 1">
+        <span class="field" id="dt_BLastName[1]/@v" dt_req="r" />
+        <br />
+        Loan #:
+        <span class="field" id="dt_LoanNumber/@v" dt_req="r" />
+        <dt_if cond="dt_ServLoanNumber/@v .ne. NIL">
+          <br />
+          <abbr title="Servicing"> Serv. </abbr> #:
+          <span class="field" id="dt_ServLoanNumber/@v" dt_req="o" />
+        </dt_if>
+
+        <dt_if cond="dt_MERSYesNo/@v .eq. 1">
+          <br />
+          <abbr title="Mortgage Electronic Registration Systems Identification Number">
+          MIN </abbr>:
+          <span class="field" id="dt_MersNum/@v" dt_req="o" />
+        </dt_if>
+
+        <dt_if cond="dt_CFL_DsplyOnNote/@v .eq. 1 and dt_PropertyState/@v .eq. 'CA'">
+          <br />
+          <abbr title="California Finance Lenders License"> CFL </abbr> #:
+          <span id="dt_CFLNum/@v" dt_req="o" />
+        </dt_if>
+      </dt_if>
+    </td>
+  </tr>
+</table>
+
+<table style="text-align:center; ">
+  <tr>
+    <td style="width:33%; ">
+      <dt_if cond="dt_ExecutionDate/@v .ne. NIL">
+        <span class="field" id="dt_ExecutionDate/@v" dt_req="o2" dt_masktype="date" dt_mask="MMMM d, yyyy" />
+      <dt_else />
+        <span class="field" id="dt_EstClosingDate/@v" dt_req="o2" dt_masktype="date" dt_mask="MMMM d, yyyy" />
+      </dt_if>
+      <br />
+      [Date]
+    </td>
+    <td style="width:34%; ">
+      <span style="font-family:Courier; font-weight:bold; ">
+      <span class="field" id="dt_ExecutionCity/@v" dt_req="o2" />,</span>
+      <br />
+      [City]
+    </td>
+    <td style="width:33%; ">
+      <span class="field" id="dt_ExecState/@v" dt_req="o.5" dt_masktype="function" dt_mask="NonAbvState" />
+      <br />
+      [State]
+    </td>
+  </tr>
+</table>
+
+<p style="text-align:center; ">
+  <!-- field split into pieces on purpose. required to make this doc SmartDoc compatible, don't change. =) -->
+  <span style="font-family:Courier; font-weight:bold; ">
+  <span class="field" id="dt_PropertyStreet/@v" dt_req="o1.5" />,
+  <span class="field" id="dt_PropertyCity/@v" dt_req="o1.5" />,
+  <span class="field" id="dt_PropertyState/@v" dt_req="o.5" />
+  <span class="field" id="dt_PropertyZip/@v" dt_req="o1" /></span>
+  <br />
+  [Property Address]
+</p>
+
+<div style="font-weight:bold; ">
+  1. BORROWER'S PROMISE TO PAY
+</div>
+
+<div class="indent">
+  In return for a loan that I have received, I promise to pay U.S.
+  $<span class="field" id="dt_LoanAmount/@v" dt_req="r2" dt_mask="#,##0.00" dt_masktype="number" />
+  (this amount is called "Principal"), plus interest to the order of the Lender.
+  The Lender is
+  <dt_if cond="dt_UseCustomLenderNameOnNoteAndRiders-NotRecommended/@v .eq. 1">
+    <span class="field" id="dt_CustomLenderNameOnNoteAndRiders-NotRecommended/@v" dt_req="r2.9" />.
+  <dt_else />
+    <span class="field" id="dt_LenderNameandExt/@v" dt_req="r2.9" />.
+  </dt_if>
+  I will make all payments under this Note in the form of cash, check or money
+  order.
+</div>
+
+<div class="indent">
+  I understand that the Lender may transfer this Note. The Lender or anyone who
+  takes this Note by transfer and who is entitled to receive payments under this
+  Note is called the "Note Holder."
+</div>
+
+<div style="font-weight:bold; ">
+  2. INTEREST
+</div>
+
+<div class="indent">
+  Interest will be charged on unpaid principal until the full amount of Principal
+  has been paid. I will pay interest at a yearly rate of
+  <span class="field" id="dt_InterestRate/@v" dt_req="r1" dt_mask="#0.000" dt_masktype="number" />%.
+</div>
+
+<div class="indent">
+  The interest rate required by this Section 2 is the rate I will pay both before
+  and after any
+  <dt_if cond="dt_PropertyState/@v .eq. 'PA'">
+    Survival Event as defined in
+  <dt_else />
+    default described in Section 6(B) of
+  </dt_if>
+  this Note.
+</div>
+
+<dt_if cond="dt_PropertyState/@v .eq. 'WI'">
+  <div class="indent">
+    Solely for the purpose of computing interest, a monthly payment received by the
+    Note Holder within 30 days prior to or after the date it is due will be deemed
+    to be paid on such due date.
+  </div>
+</dt_if>
+
+<div style="font-weight:bold; ">
+  3. PAYMENTS
+</div>
+
+<div class="indent" style="font-weight:bold; ">
+  (A) Time and Place of Payments
+</div>
+
+<div class="indent">
+  I will pay principal and interest by making a payment every month.
+</div>
+
+<div class="indent">
+  I will make my monthly payment on the
+  <!-- different fields on purpose - first is d part of second. required to make this doc SmartDoc compatible, don't change. =) -->
+  <span class="field" id="dt_PaymentRemittanceDay/@v" dt_req="r.5" dt_mask="ord()" dt_masktype="function" />
+  day of each month beginning on
+  <span class="field" id="dt_FirstPymtDate/@v" dt_req="r2" dt_mask="MMMM d, yyyy" dt_masktype="date" />.
+  I will make these payments every month until I have paid all of the principal
+  and interest and any other charges described below that I may owe under this
+  Note. Each monthly payment
+  <dt_if cond="dt_PropertyState/@v .ne. 'WI'">
+    will be applied as of its scheduled due date and
+  </dt_if>
+  will be applied to interest and other items in the order described in the
+  Security Instrument before Principal. If, on
+  <dt_if cond="dt_BalloonMaturityDate/@v .ne. NIL">
+    <span class="field" id="dt_BalloonMaturityDate/@v" dt_req="r2" dt_mask="MMMM d, yyyy" dt_masktype="date" />,
+  <dt_else_if cond="dt_LoanPurpose/@v .eq. 3" />
+    <span class="field" id="dt_ConstructionMaturityDate/@v" dt_req="r2" dt_mask="MMMM d, yyyy" dt_masktype="date" />,
+  <dt_else />
+    <span class="field" id="dt_MaturityDate/@v" dt_req="r2" dt_mask="MMMM d, yyyy" dt_masktype="date" />,
+  </dt_if>
+  I still owe amounts under this Note, I will pay those amounts in full on that
+  date, which is called the "Maturity Date."
+  <dt_if cond="dt_PropertyState/@v .eq. 'PA'">
+    I will continue to pay those amounts both before and after any Survival Event
+    as defined in this Note, until I have paid all of the principal and interest
+    and any other charges described below that I may owe under this Note.
+  </dt_if>
+</div>
+
+<div class="indent">
+  I will make my monthly payments at
+  <!-- field split into pieces on purpose. required to make this doc SmartDoc compatible, don't change. =) -->
+  <span style="font-family:Courier; font-weight:bold; ">
+  <span class="field" id="dt_NotePayToStreet/@v" dt_req="r1.9" />,
+  <span class="field" id="dt_NotePayToCity/@v" dt_req="r1.15" />,
+  <span class="field" id="dt_NotePayToState/@v" dt_req="r.5" />
+  <span class="field" id="dt_NotePayToZip/@v" dt_req="r1" /></span>
+  or at a different place if required by the Note Holder.
+</div>
+
+<div style="font-weight:bold; " class="indent">
+  (B) Amount of Monthly Payments
+</div>
+
+<div class="indent">
+  My monthly payment will be in the amount of U.S.
+  $<span class="field" id="dt_PnIFixedNoMod/@v" dt_req="r1" dt_mask="#,##0.00" dt_masktype="number" />.
+</div>
+
+<div style="font-weight:bold; ">
+  4. BORROWER'S RIGHT TO PREPAY
+</div>
+
+<div class="indent">
+  I have the right to make payments of Principal at any time before they are due.
+  A payment of Principal only is known as a "Prepayment." When I make a
+  Prepayment, I will tell the Note Holder in writing that I am doing so. I may
+  not designate a payment as a Prepayment if I have not made all the monthly
+  payments due under the Note.
+</div>
+
+<div class="indent">
+  I may make a full Prepayment or partial Prepayments without paying a Prepayment
+  charge. The Note Holder will use my Prepayments to reduce the amount of
+  Principal that I owe under this Note. However, the Note Holder may apply my
+  Prepayment to any accrued and unpaid interest on the Prepayment amount before
+  applying my Prepayment to reduce the Principal amount of the Note. If I make a
+  partial Prepayment, there will be no changes in the due date or in the amount
+  of my monthly payment unless the Note Holder agrees in writing to those
+  changes.
+</div>
+
+<div style="font-weight:bold; ">
+  5. LOAN CHARGES
+</div>
+
+<div class="indent">
+  If a law, which applies to this loan and which sets maximum loan charges, is
+  finally interpreted so that the interest or other loan charges collected or to
+  be collected in connection with this loan exceed the permitted limits, then:
+  (a) any such loan charge shall be reduced by the amount necessary to reduce the
+  charge to the permitted limit; and (b) any sums already collected from me which
+  exceeded permitted limits will be refunded to me. The Note Holder may choose to
+  make this refund by reducing the Principal I owe under this Note or by making a
+  direct payment to me. If a refund reduces Principal, the reduction will be
+  treated as a partial Prepayment.
+</div>
